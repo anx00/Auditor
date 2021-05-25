@@ -1,0 +1,258 @@
+{% extends "source/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="grid">
+        {% include "source/nav_bar.html" %}
+
+        <div class="barra-nav">
+            <div class="pestañas">
+                <button onclick="location.href=' {% url 'APs' %}'" class="volver__boton" id="boton-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left arrow_volver"
+                         width="20"
+                         height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#0171A2" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <line x1="5" y1="12" x2="11" y2="18"/>
+                        <line x1="5" y1="12" x2="11" y2="6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="user">
+                <p>User:</p><span class="user_name">{{ request.user }}</span>
+                <span class="separator">|</span>
+                <span>
+                    <a class="logout" href="{% url 'logout' %}">Logout</a>
+                </span>
+
+            </div>
+        </div>
+
+        <div id="myDIV" class="datos-ap2">
+            <div class="tabs">
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input"
+                           onclick="location.href='informacion'">
+                    <div class="tab-box">Detailed Information</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='senal'">
+                    <div class="tab-box">Signal Quality</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='seguridad'">
+                    <div class="tab-box">Security</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='connection'">
+                    <div class="tab-box">Connect</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" checked="checked" name="tab-input" class="tab-input"
+                           onclick="location.href='personal_scan'">
+                    <div class="tab-box">Personal Scan</div>
+                </label>
+            </div>
+            {% if flag == 0 %}
+                <div class="datos-ap__informacion__personal">
+                <div class="form_scan">
+                <label for="time">Choose a scan time:</label>
+                <select name="time" id="time">
+                    <option value="0.5">30 seconds</option>
+                    <option value="1">1 min</option>
+                    <option value="5">5 min</option>
+                    <option value="60">1 hour</option>
+                </select>
+                <br><br>
+                <div class="center"><input class="volver__boton center" type="submit" id="upvote" value="Start">
+                </div>
+            {% elif flag == 1 %}
+                <h2>Scanning...</h2>
+            {% endif %}
+            </div>
+            {% if result %}
+                <div class="paquetes-scan center">
+                    <h3>SCAN FINISHED</h3>
+                    <p>Started: <span class="dates" id="date_created">{{ date_created }}</span> Finished: <span
+                            class="dates"
+                            id="date_finished">{{ date_finished }}</span></p>
+                    <div class="paquetes-scan-grid1">
+                        <div class="paquetes-scan-grid1-deauth">
+                            <div class="chart-info">
+                                <h3>Deauthentication Frames</h3>
+                                <canvas id="deauth_chart"></canvas>
+                                <button type="button" onclick="collapse(this)"
+                                        class="datos-ap__informacion__dato collapsible2">Check Frames
+                                    Details
+                                </button>
+                                <div class="frames_collapsible">
+                                    <p>Total Deauthentication Frames: {{ deauth|length }}</p>
+                                    <table id="maintable" class="redes-wifi__tabla">
+                                        <thead>
+                                        <tr>
+                                            <th>Target</th>
+                                            <th>Reason Code</th>
+                                            <th>Date</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for dith in deauth %}
+                                            <tr class="table_data">
+                                                {% if dith.time > date_created and dith.time < date_finished %}
+                                                    <td>{{ dith.target|upper }}</td>
+                                                    <td>{{ dith.reason }}</td>
+                                                    <td class="deauth_frames_time">{{ dith.time }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <h3>Authentication Frames</h3>
+                                <canvas id="auth_chart"></canvas>
+                                <button type="button" onclick="collapse(this)"
+                                        class="datos-ap__informacion__dato collapsible2">Check Frames
+                                    Details
+                                </button>
+                                <div class="frames_collapsible">
+                                    <p>Total Authentication Frames: {{ auth|length }}</p>
+                                    <table id="maintable" class="redes-wifi__tabla">
+                                        <thead>
+                                        <tr>
+                                            <th>Target</th>
+                                            <th>Algorithm</th>
+                                            <th>Seq. Number</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for aith in auth %}
+                                            <tr class="table_data">
+                                                {% if aith.time > date_created and aith.time < date_finished %}
+                                                    <td>{{ aith.target|upper }}</td>
+                                                    <td>{{ aith.algo }}</td>
+                                                    <td>{{ aith.seqnum }}</td>
+                                                    <td>{{ aith.status|upper }}</td>
+                                                    <td class="auth_frames_time">{{ aith.time }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <h3>Disassociation Frames</h3>
+                                <canvas id="disas_chart"></canvas>
+                                <button type="button" onclick="collapse(this)"
+                                        class="datos-ap__informacion__dato collapsible2">Check Frames
+                                    Details
+                                </button>
+                                <div class="frames_collapsible">
+                                    <p>Total Disassociation Frames: {{ disas|length }}</p>
+                                    <table id="maintable" class="redes-wifi__tabla">
+                                        <thead>
+                                        <tr>
+                                            <th>Target</th>
+                                            <th>Reason Code</th>
+                                            <th>Date</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for disis in disas %}
+                                            <tr class="table_data">
+                                                {% if disis.time > date_created and disis.time < date_finished %}
+                                                    <td>{{ disis.target|upper }}</td>
+                                                    <td>{{ disis.reason }}</td>
+                                                    <td class="disas_frames_time">{{ disis.time }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <h3>Association Request Frames</h3>
+                                <canvas id="assosreq_chart"></canvas>
+                                <button type="button" onclick="collapse(this)"
+                                        class="datos-ap__informacion__dato collapsible2">Check Frames
+                                    Details
+                                </button>
+                                <div class="frames_collapsible">
+                                    <p>Total Association Request Frames: {{ assosreq|length }}</p>
+                                    <table id="maintable" class="redes-wifi__tabla">
+                                        <thead>
+                                        <tr>
+                                            <th>Target</th>
+                                            <th>Listen Interval</th>
+                                            <th>Date</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for assisq in assosreq %}
+                                            <tr class="table_data">
+                                                {% if assisq.time > date_created and assisq.time < date_finished %}
+                                                    <td>{{ assisq.target|upper }}</td>
+                                                    <td>{{ assisq.listen_interval }}</td>
+                                                    <td class="assosreq_frames_time">{{ assisq.time }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="chart-info">
+                                <h3>Association Response Frames</h3>
+                                <canvas id="assosresp_chart"></canvas>
+                                <button type="button" onclick="collapse(this)"
+                                        class="datos-ap__informacion__dato collapsible2">Check Frames
+                                    Details
+                                </button>
+                                <div class="frames_collapsible">
+                                    <p>Total Association Response Frames: {{ assoresp|length }}</p>
+                                    <table id="maintable" class="redes-wifi__tabla">
+                                        <thead>
+                                        <tr>
+                                            <th>Target</th>
+                                            <th>Status Code</th>
+                                            <th>AID</th>
+                                            <th>Date</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for assisr in assoresp %}
+                                            <tr class="table_data">
+                                                {% if assisr.time > date_created and assisr.time < date_finished %}
+                                                    <td>{{ assisr.target|upper }}</td>
+                                                    <td>{{ assisr.status }}</td>
+                                                    <td>{{ assisr.aid }}</td>
+                                                    <td class="assosresp_frames_time">{{ assisr.time }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+    <script src="{% static 'source/js/charts.js' %}" async></script>
+{% endblock %}

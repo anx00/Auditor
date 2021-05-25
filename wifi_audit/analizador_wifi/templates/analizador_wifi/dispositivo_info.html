@@ -1,0 +1,68 @@
+{% extends "source/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="grid">
+        {% include "source/nav_bar.html" %}
+
+        <div class="barra-nav">
+            <div class="pestañas">
+                <button onclick="location.href=' {% url 'Dispositivos' %}'" class="volver__boton" id="boton-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left arrow_volver"
+                         width="20"
+                         height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#0171A2" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <line x1="5" y1="12" x2="11" y2="18"/>
+                        <line x1="5" y1="12" x2="11" y2="6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="user">
+                <p>User:</p><span class="user_name">{{ request.user }}</span>
+                <span class="separator">|</span>
+                <span>
+                    <a class="logout" href="{% url 'logout' %}">Logout</a>
+                </span>
+
+            </div>
+        </div>
+
+        <div id="myDIV" class="datos-ap">
+            <div class="tabs">
+                <label class="tab">
+                    <input type="radio" checked="checked" name="tab-input" class="tab-input"
+                           onclick="location.href='informacion_dispositivo'">
+                    <div class="tab-box">Detailed Information</div>
+                </label>
+            </div>
+            <div class="datos-ap__informacion">
+                <p class="datos-ap__informacion__dato">IP</p><span
+                    class="datos-especificos__ap">{{ dispositivo.ip }}</span>
+                <p class="datos-ap__informacion__dato">MAC Address</p><span
+                    class="datos-especificos__ap">{{ dispositivo.mac }}</span>
+                <p class="datos-ap__informacion__dato">Hostname</p><span
+                    class="datos-especificos__ap">{{ dispositivo.nombre_dispositivo }}</span>
+                <p class="datos-ap__informacion__dato">Type</p><span
+                    class="datos-especificos__ap">{{ data.type|title }}</span>
+                <p class="datos-ap__informacion__dato">Vendor</p><span
+                    class="datos-especificos__ap" id="vendor">{{ dispositivo.vendor }}</span>
+                <p class="datos-ap__informacion__dato">OS</p><span
+                    class="datos-especificos__ap">{{ data.name }}</span>
+                <p class="datos-ap__informacion__dato">OS Family</p><span
+                    class="datos-especificos__ap">{{ data.osfamily }}</span>
+                <p class="datos-ap__informacion__dato">Connected to</p><span
+                    class="datos-especificos__ap">{{ connected_ap }}</span>
+                <p class="datos-ap__informacion__dato">Last Seen</p><span
+                    class="datos-especificos__ap">{{ dispositivo.last_seen }}</span>
+            </div>
+            {% comment %}
+            <button id="open_ports" class="datos-ap__informacion__dato collapsible2">SCAN OPEN PORTS
+            </button>
+            {% endcomment %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "source/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="barra-nav" style="display: none">
+        <div class="pestañas">
+            <button onclick="location.href=' {% url 'Monitor' %}'" class="pestañas__boton" id="boton-start">Scan
+            </button>
+            <button class="pestañas__boton" onclick="location.href=' {% url 'APs' %}'" id="boton-stop"
+                    style="display: none">Stop
+            </button>
+            <div class="loader" id="loader"></div>
+        </div>
+        <div class="user">
+            <p>User:</p><span class="user_name">{{ request.user }}</span>
+            <span class="separator">|</span>
+            <span>
+                    <a class="logout" href="{% url 'logout' %}">Logout</a>
+                </span>
+        </div>
+    </div>
+
+    <div class="grid">
+        {% include "source/nav_bar.html" %}
+
+        <div id="mynetwork" class="mynetwork"></div>
+        <!--Menu operation-->
+        <div id="menuOperation" class="menu" style="display: none;"></div>
+
+
+    </div>
+
+    <script type="text/javascript">
+        var home = "{% static "source/img/home.png" %}";
+        var ap = "{% static "source/img/ap.png" %}";
+        var dispositivo = "{% static "source/img/device.png" %}";
+    </script>
+    <script src="{% static 'source/js/ap_map.js' %}" async></script>
+
+{% endblock %}
