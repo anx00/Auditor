@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="str.sleep" />
+          <option value="range.append" />
+          <option value="api.views.background_tasks" />
+          <option value="wifi_audit.modo_monitor.views.modo_monitor" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
