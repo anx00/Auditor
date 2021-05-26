@@ -2,6 +2,7 @@ from billiard.context import Process
 
 from scapy.all import *
 from scapy.layers.dot11 import *
+from modo_monitor import utils
 
 data = {}
 
@@ -143,12 +144,10 @@ def check_interface():
         if mode == "803":
             return interface
 
-def restart_interface():
-    os.system("restartCard >/dev/null 2>&1")
 
 def scanner(interfaz, mac, timeout):
     # Esto simplemente es temporal porque la tarjeta va como quiere
-    restart_interface()
+    utils.restart_interface()
 
     # Creamos un proceso de multithreading de manera que va haciendo channel hopping
     p = Process(target=channel_hopper)

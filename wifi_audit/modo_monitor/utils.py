@@ -42,7 +42,14 @@ def check_interface():
 
 #Function to restart interface
 def restart_interface():
-    os.system("restartCard >/dev/null 2>&1")
+
+    os.system("ifconfig wlxdc4ef405cd9f down")
+    os.system("iwconfig wlxdc4ef405cd9f mode managed")
+    os.system("ifconfig wlxdc4ef405cd9f up")
+
+    os.system("ifconfig wlxdc4ef405cd9f down")
+    os.system("iwconfig wlxdc4ef405cd9f mode monitor")
+    os.system("ifconfig wlxdc4ef405cd9f up")
 
 
 #Convert a list to a string
