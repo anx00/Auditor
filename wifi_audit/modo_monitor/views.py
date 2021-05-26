@@ -10,7 +10,7 @@ from modo_monitor.models import access_point, device
 from modo_monitor.network_scanner import networkscanner, connect_to_ap
 from wifi_audit.celery import app
 from . import utils
-from .tasks import prueba_suma
+from .tasks import intensive_scan
 
 
 # Create your views here.
@@ -191,10 +191,9 @@ def personal_scan(request, id):
                     i += 1
 
     if request.method == "POST":
-        data = datetime.datetime.now()
         time = float(request.POST.get('scan_time')) * 60
         TaskResult.objects.filter(task_args__contains=mac).delete()
-        prueba_suma.delay(interfaces, mac, time, time_created)
+        intensive_scan.delay(interfaces, mac, time, time_created)
 
     task = TaskResult.objects.filter(task_args__contains=mac)
 

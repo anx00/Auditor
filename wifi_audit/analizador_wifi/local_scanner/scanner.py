@@ -27,8 +27,6 @@ def manf2(mac):
 def os_detection(target):
     nm = nmap3.Nmap()
     os_results = nm.nmap_os_detection(target)
-    print(os_results)
-    os_scan = {}
     for key in os_results:
         if 'osmatch' in os_results[key] and os_results[key]['osmatch'] != []:
             os_name = os_results[key]['osmatch'][0]['name']
@@ -38,7 +36,7 @@ def os_detection(target):
 
             return os_scan
         else:
-            os_scan = {"name": "", "type": "", "osfamily": ""}
+            os_scan = {"name": "Unknown", "type": "Unknown", "osfamily": "Unknown"}
             return os_scan
 
 
@@ -76,15 +74,20 @@ def arp_scan(ip):
 
 def get_connected_bssid():
 
-
-    actual_bssid = subprocess.check_output("iwgetid --ap -r", shell=True).decode('utf-8').rstrip('\n')
+    try:
+        actual_bssid = subprocess.check_output("iwgetid --ap -r", shell=True).decode('utf-8').rstrip('\n')
+    except:
+        actual_bssid = "None"
 
     return actual_bssid
 
 
 def get_connected_ssid():
 
-    actual_ssid = subprocess.check_output("iwgetid -r", shell=True).decode('utf-8').rstrip('\n')
+    try:
+        actual_ssid = subprocess.check_output("iwgetid -r", shell=True).decode('utf-8').rstrip('\n')
+    except:
+        actual_ssid = "None"
 
     return actual_ssid
 

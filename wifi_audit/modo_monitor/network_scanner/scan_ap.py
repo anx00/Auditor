@@ -148,7 +148,6 @@ def restart_interface():
 
 def scanner(interfaz, mac, timeout):
     # Esto simplemente es temporal porque la tarjeta va como quiere
-    # os.system("restartCard >/dev/null 2>&1")
     restart_interface()
 
     # Creamos un proceso de multithreading de manera que va haciendo channel hopping

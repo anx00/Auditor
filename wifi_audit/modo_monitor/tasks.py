@@ -7,6 +7,6 @@ from modo_monitor.network_scanner.scan_ap import scanner
 
 
 @shared_task
-def prueba_suma(interfaz, mac, timeout, time):
+def intensive_scan(interfaz, mac, timeout, time):
         data = scanner(interfaz, mac, timeout)
         return data

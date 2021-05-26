@@ -16,7 +16,7 @@ def analizador_wifi(request):
         if dispositivos.objects.filter(ip=mapping['IP']).exists() == False:
             dispositivos.objects.create(ip=mapping['IP'], mac=mapping['MAC'], nombre_dispositivo=mapping['name'],
                                         last_seen=mapping['last_seen'], connected_to=connected_ap,
-                                        vendor=mapping['vendor'], os="", osfamily="", type="")
+                                        vendor=mapping['vendor'], os="Unknown", osfamily="Unknown", type="Unknown")
         else:
             dispositivos.objects.filter(ip=mapping['IP']).update(last_seen=mapping['last_seen'])
 
@@ -47,7 +47,7 @@ def dispositivo_info(request, id):
     connected_ap = get_connected_ssid()
     data = {"name": dispositivo.os, "osfamily": dispositivo.osfamily, "type": dispositivo.type}
 
-    if dispositivo.os == "" and dispositivo.osfamily == "" and dispositivo.type == "":
+    if dispositivo.os == "Unknown" and dispositivo.osfamily == "Unknown" and dispositivo.type == "Unknown":
         data = os_detection(dispositivo.ip)
 
         dispositivos.objects.filter(id=id).update(os=data['name'], osfamily=data['osfamily'], type=data['type'])

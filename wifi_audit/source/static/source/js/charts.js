@@ -1,4 +1,5 @@
 /** CHART **/
+let chart
 //Initial and End dates of scan
 date_created = $('#date_created').text()
 date_finished = $('#date_finished').text()

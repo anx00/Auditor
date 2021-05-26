@@ -1,4 +1,5 @@
 /** VIS.JS AND MAPPING MODULE **/
+
 async function getData() {
     var response = await fetch('/api/devices');
     return await response.json()
