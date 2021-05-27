@@ -1,5 +1,6 @@
 import json
 import os, subprocess
+from env import MONITOR_INTERFACE
 
 # Transform decimal data to Binary
 def decimalToBinary(n):
@@ -40,16 +41,16 @@ def check_interface():
             return interface
 
 
-#Function to restart interface
+#Function to restart interface in case its bugged
 def restart_interface():
 
-    os.system("ifconfig wlxdc4ef405cd9f down")
-    os.system("iwconfig wlxdc4ef405cd9f mode managed")
-    os.system("ifconfig wlxdc4ef405cd9f up")
+    os.system("ifconfig %s down" % MONITOR_INTERFACE)
+    os.system("iwconfig %s mode managed" % MONITOR_INTERFACE)
+    os.system("ifconfig %s up" % MONITOR_INTERFACE)
 
-    os.system("ifconfig wlxdc4ef405cd9f down")
-    os.system("iwconfig wlxdc4ef405cd9f mode monitor")
-    os.system("ifconfig wlxdc4ef405cd9f up")
+    os.system("ifconfig %s down" % MONITOR_INTERFACE)
+    os.system("iwconfig %s mode monitor" % MONITOR_INTERFACE)
+    os.system("ifconfig %s up" % MONITOR_INTERFACE)
 
 
 #Convert a list to a string

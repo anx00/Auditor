@@ -1,0 +1,4 @@
+import os
+
+LOCAL_NETWORK = os.getenv('LOCAL_NETWORK', '192.168.1.0/24')
+MONITOR_INTERFACE = os.getenv('MONITOR_INTERFACE', 'eth0')

@@ -4,6 +4,7 @@ from scapy.all import *
 from scapy.layers.dot11 import *
 
 from modo_monitor import utils
+from env import MONITOR_INTERFACE
 
 ap_list = []
 ap_dict = {}
@@ -329,7 +330,7 @@ def deauth_packets(ap):
 def channel_hopper():
     list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 36, 40, 44, 48]
     # Definimos la interfaz
-    interface = "wlxdc4ef405cd9f"
+    interface = MONITOR_INTERFACE
     while True:
         try:
             # channel = random.randrange(1, 15)

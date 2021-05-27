@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-s0=)1pcgk+c7wp3i0-y0&h!_v==p7)&!k0a-1lr+(-zcl57!34
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.20']
+ALLOWED_HOSTS = ['*']
 
 CRONJOBS = [
     ('* * * * *', 'source.cron.upload_mongo')

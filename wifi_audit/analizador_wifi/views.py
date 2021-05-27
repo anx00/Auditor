@@ -3,11 +3,13 @@ from django.shortcuts import render
 from analizador_wifi.local_scanner.scanner import arp_scan, get_connected_bssid, get_connected_ssid, os_detection
 from analizador_wifi.models import dispositivos
 from django.contrib.auth.decorators import login_required
+from env import LOCAL_NETWORK
+
 
 # Create your views here.
 @login_required(login_url='login')
 def analizador_wifi(request):
-    result = arp_scan("192.168.1.1/24")
+    result = arp_scan(LOCAL_NETWORK)
     # result = arp_scan("10.25.131.197/16")
 
     connected_ap = get_connected_bssid()

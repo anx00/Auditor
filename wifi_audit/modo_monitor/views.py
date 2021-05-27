@@ -11,7 +11,7 @@ from modo_monitor.network_scanner import networkscanner, connect_to_ap
 from wifi_audit.celery import app
 from . import utils
 from .tasks import intensive_scan
-
+from env import MONITOR_INTERFACE
 
 # Create your views here.
 @login_required(login_url='login')
@@ -21,7 +21,7 @@ def modo_monitor(request):
     default_interface = connect_to_ap.check_interface_mode("monitor")
     interface = default_interface  # meter esto en los ficheros de python de funciones
 
-    aps_temp = networkscanner.start_sniffing("wlxdc4ef405cd9f")
+    aps_temp = networkscanner.start_sniffing(MONITOR_INTERFACE)
 
     for ap in aps_temp:
         bssid = ap.upper()
@@ -86,7 +86,7 @@ def modo_monitor(request):
 
 @login_required(login_url='login')
 def ver_aps(request):
-    interfaces = "wlxdc4ef405cd9f"
+    interfaces = MONITOR_INTERFACE
 
     aps = access_point.objects.all().order_by('id')
 
@@ -172,7 +172,7 @@ def captura_paquetes(request):
 def personal_scan(request, id):
     ap = access_point.objects.get(id=id)
     mac = ap.bssid.lower()
-    interfaces = "wlxdc4ef405cd9f"
+    interfaces = MONITOR_INTERFACE
     time_created = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     try:
         running_tasks = app.control.inspect().active()
