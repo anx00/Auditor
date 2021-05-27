@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wifi Audit</title>
+
+    {% load static %}
+
+    <!-- Preload -->
+
+    <!-- Fix favicon error -->
+    <link rel="shortcut icon" href="#">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preload" href="{% static 'source/css/normalize.css' %}" as="style">
+    <link rel="stylesheet" href="{% static 'source/css/normalize.css' %}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="preload" href="{% static 'source/css/styles.css' %}" as="style">
+    <link rel="stylesheet" href="{% static 'source/css/styles.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{% static 'source/js/scripts.js' %}" async></script>
+
+
+</head>
+
+<body>
+<header class="header">
+    <a class="header" href="{% url 'Home' %}">
+        <img class="header__logo" src="{% static 'source/img/logo.png' %}" alt="Logotipo">
+        <h1 class="titulo">WiFi <span class="h1span">Audit</span></h1>
+    </a>
+
+
+</header>
+
+<main class="contenedor">
+    <h2 class="audit_environment">Audit your environment</h2>
+
+    <!-- Contenido cambiante -->
+    {% block content %}
+
+    {% endblock %}
+
+    </div>
+
+</main>
+</body>
+</html>

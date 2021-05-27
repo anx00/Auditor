@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: wifi_audit_db
+    image: postgres:11.12
+    volumes:
+      - wifi_audit_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB:       postgres
+      POSTGRES_USER:     postgres
+      POSTGRES_PASSWORD: postgres
+      
+    ports:
+      - 127.0.0.1:5432:5432
+
+  web:
+    container_name: wifi_audit_app
+    build: .
+    depends_on:
+      - db
+    network_mode: "host"
+    privileged: "true"
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+    environment:
+      LOCAL_NETWORK: "192.168.1.0/24"
+      MONITOR_INTERFACE: "wlxdc4ef405cd9f"
+      SERVER_ENDPOINT: "http://127.0.0.1:7000/api"
+      
+volumes: 
+    wifi_audit_db_data:

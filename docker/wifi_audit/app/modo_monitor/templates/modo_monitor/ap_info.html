@@ -1,0 +1,89 @@
+{% extends "source/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+    <div class="grid">
+        {% include "source/nav_bar.html" %}
+
+        <div class="barra-nav">
+            <div class="pestañas">
+                <button onclick="location.href=' {% url 'APs' %}'" class="volver__boton" id="boton-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left arrow_volver"
+                         width="20"
+                         height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#0171A2" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <line x1="5" y1="12" x2="11" y2="18"/>
+                        <line x1="5" y1="12" x2="11" y2="6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="user">
+                <p>User:</p><span class="user_name">{{ request.user }}</span>
+                <span class="separator">|</span>
+                <span>
+                    <a class="logout" href="{% url 'logout' %}">Logout</a>
+                </span>
+
+            </div>
+        </div>
+
+        <div id="myDIV" class="datos-ap">
+            <div class="tabs">
+                <label class="tab">
+                    <input type="radio" checked="checked" name="tab-input" class="tab-input"
+                           onclick="location.href='informacion'">
+                    <div class="tab-box">Detailed Information</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='senal'">
+                    <div class="tab-box">Signal Quality</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='seguridad'">
+                    <div class="tab-box">Security</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='connection'">
+                    <div class="tab-box">Connect</div>
+                </label>
+                <label class="tab">
+                    <input type="radio" name="tab-input" class="tab-input" onclick="location.href='personal_scan'">
+                    <div class="tab-box">Personal Scan</div>
+                </label>
+            </div>
+            <div class="datos-ap__informacion">
+                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.essid }}</span>
+                <p></p>
+                <p class="datos-ap__informacion__dato">BSSID</p><span
+                    class="datos-especificos__ap">{{ ap.bssid }}</span>
+                <p class="datos-ap__informacion__dato">Channel</p><span
+                    class="datos-especificos__ap">{{ ap.canal }}</span>
+                <p class="datos-ap__informacion__dato">Distance to AP</p><span
+                    class="datos-especificos__ap">~ {{ ap.fspl }}m</span>
+                <p class="datos-ap__informacion__dato">Supported Rates</p><span
+                    class="datos-especificos__ap">{{ ap.rates }} [Mb/s]</span>
+                <p class="datos-ap__informacion__dato">Vendor</p><span
+                    class="datos-especificos__ap">{{ ap.manufacturer }}</span>
+                <p class="datos-ap__informacion__dato">Beacons</p><span
+                    class="datos-especificos__ap">{{ ap.beacons }}</span>
+                <p class="datos-ap__informacion__dato">Connected Devices</p>
+                {% if devices %}
+                    {% for device in devices %}
+                        <span class="datos-especificos__ap">{{ device.mac_device | upper }} ( {{ device.manufacturer }} )</span>
+                    {% endfor %}
+                {% else %}
+                    <span class="datos-especificos__ap">None</span>
+                {% endif %}
+                {% for r in results %}
+                    {{ r.result }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "source/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="grid">
+        {% include "source/nav_bar.html" %}
+
+        <div class="barra-nav">
+            <div class="pestañas">
+                <button onclick="location.href=' {% url 'Wifi' %}'" class="pestañas__boton" id="boton-start">Scan
+                </button>
+                <button class="pestañas__boton" onclick="location.href=' {% url 'Dispositivos' %}'" id="boton-stop"
+                        style="display: none">Stop
+                </button>
+                <div class="loader" id="loader"></div>
+            </div>
+            <div class="user">
+                <p>User:</p><span class="user_name">{{ request.user }}</span>
+                <span class="separator">|</span>
+                <span>
+                    <a class="logout" href="{% url 'logout' %}">Logout</a>
+                </span>
+
+            </div>
+        </div>
+
+
+        <div id="table-container" class="table_parent">
+            <table id="maintable" class="redes-wifi__tabla">
+                <thead class="redes-wifi__encabezado">
+                <tr class="redes-wifi__encabezado__tr">
+                    <th class="redes-wifi__encabezado__columna1__disp fixed-header" style="width: 10%">#
+                        ({{ dispositivo|length }})
+                    </th>
+                    <th class="redes-wifi__encabezado__columna2__disp fixed-header" style="width: 20%">IP</th>
+                    <th class="redes-wifi__encabezado__columna3__disp fixed-header" style="width: 25%">MAC Address</th>
+                    <th class="redes-wifi__encabezado__columna4__disp fixed-header" style="width: 25%">Hostname</th>
+                    <th class="redes-wifi__encabezado__columna5__disp fixed-header" style="width: 20%">Last Seen</th>
+                </tr>
+                </thead>
+                <tbody class="redes-wifi__tabla__body blocked-background">
+                {% for disp in dispositivo %}
+                    <tr class="redes-wifi__filas nohover" onclick="showData();">
+                        <td class="redes-wifi__filas__columnas" style="width: 10%">{{ disp.id }}</td>
+                        <td class="redes-wifi__filas__columnas" style="width: 20%">{{ disp.ip }}</td>
+                        <td class="redes-wifi__filas__columnas" style="width: 25%">{{ disp.mac|upper }}</td>
+                        <td class="redes-wifi__filas__columnas" style="width: 25%">{{ disp.nombre_dispositivo }}</td>
+                        <td class="redes-wifi__filas__columnas" style="width: 20%">{{ disp.last_seen }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            update()
+        };
+    </script>
+
+{% endblock %}

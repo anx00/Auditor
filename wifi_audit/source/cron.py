@@ -2,10 +2,9 @@ from django.core import serializers
 import requests
 from modo_monitor.models import access_point, device
 from analizador_wifi.models import dispositivos
+from env import SERVER_ENDPOINT
 
-SERVER_ENDPOINT = "http://127.0.0.1:7000/api"
-
-def upload_mongo():
+def upload_db():
 
     aps = access_point.objects.all().order_by('id')
     devices = dispositivos.objects.all().order_by('id')
@@ -17,6 +16,6 @@ def upload_mongo():
 
     data = [data_aps, data_devices, data_connected_devices]
 
-    server_url = SERVER_ENDPOINT
-    request = requests.post(url=server_url, json=data)
+    request = requests.post(url=SERVER_ENDPOINT, json=data)
+
 

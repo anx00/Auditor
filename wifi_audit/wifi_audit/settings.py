@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CRONJOBS = [
-    ('* * * * *', 'source.cron.upload_mongo')
+    ('* * * * *', 'source.cron.upload_db')
 ]
 
 # Application definition
