@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: server_db
+    image: postgres:11.12
+    volumes:
+      - server_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB:       postgres
+      POSTGRES_USER:     postgres
+      POSTGRES_PASSWORD: postgres
+
+  web:
+    container_name: server_app
+    build: .
+    ports:
+      - 7000:7000
+    depends_on:
+      - db
+      
+volumes: 
+    server_db_data:
+    
+
