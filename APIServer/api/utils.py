@@ -1,44 +1,45 @@
+from pymongo import MongoClient
 import json
 
-from api.models import access_point, dispositivos, device
+
+def save_data_mongo(data):
+
+    data_aps = data[0]
+    data_devices = data[1]
+    data_connected_devices = data[2]
+
+    mongo_url = 'mongodb://localhost'
+    client = MongoClient(mongo_url)
+    db = client['server']
+    collection_ap = db['access_point']
+    collection_devices = db['devices']
+    collecion_connected_devices = db['connected_devices']
+
+    #Save APs Info
+    json_aps = json.loads(data_aps)
+    if json_aps != []:
+        for element in json_aps:
+            flag = collection_ap.find({'bssid': element['fields']['bssid'],
+                                                 'device_id': element['fields']['device_id']}).count() > 0
+            if flag == False:
+                collection_ap.insert_one(element['fields'])
 
 
-def save_data(data):
-    aps = json.loads(data[0])
-    devices = json.loads(data[1])
-    connected_devices = json.loads(data[2])
+    #Save Local Devices Info
+    json_devices = json.loads(data_devices)
+    if json_devices != []:
+        for element in json_devices:
+            flag = collection_devices.find({'mac': element['fields']['mac'],
+                                       'device_id': element['fields']['device_id']}).count() > 0
+            if flag == False:
+                collection_devices.insert_one(element['fields'])
 
-    # Save AP Data
-    for element in aps:
-        fields = element['fields']
 
-        if access_point.objects.filter(bssid=fields['bssid']).exists() == False:
-            access_point.objects.create(local_id=element['pk'], essid=fields['essid'], bssid=fields['bssid'], rssi=fields['rssi'],
-                                        canal=fields['canal'], encriptacion=fields['encriptacion'],
-                                        spectrum=fields['spectrum'], frecuencia=fields['frecuencia'],
-                                        signal_quality=fields['signal_quality'],
-                                        rates=fields['rates'], manufacturer=fields['manufacturer'],
-                                        central_channel=fields['central_channel'],
-                                        channel_bandwidth=fields['channel_bandwidth'], fspl=fields['fspl'],
-                                        cipher=fields['cipher'], suite=fields['suite'],
-                                        beacons=fields['beacons'], deauth_frames=fields['deauth_frames'],
-                                        deauth_last_seen=fields['deauth_last_seen'],
-                                        deauth_first_seen=fields['deauth_first_seen'])
-    # Save Devices Data
-    for element in devices:
-        fields = element['fields']
-
-        if dispositivos.objects.filter(mac=fields['mac']).exists() == False:
-            dispositivos.objects.create(ip=fields['ip'], mac=fields['mac'],
-                                        nombre_dispositivo=fields['nombre_dispositivo'],
-                                        last_seen=fields['last_seen'], connected_to=fields['connected_to'],
-                                        vendor=fields['vendor'], os=fields['os'], osfamily=fields['osfamily'],
-                                        type=fields['type'])
-
-    # Save Connected Devices Data
-    for element in connected_devices:
-        fields = element['fields']
-
-        if device.objects.filter(mac_device=fields['mac_device']).exists() == False:
-            device.objects.create(connected_to=fields['connected_to'], mac_device=fields['mac_device'], manufacturer=fields['manufacturer'],
-                                  ap=access_point.objects.get(bssid=fields['connected_to']))
+    #Save Connected Devices Info
+    json_connected_devices = json.loads(data_connected_devices)
+    if json_connected_devices != []:
+        for element in json_connected_devices:
+            flag = collecion_connected_devices.find({'mac_device': element['fields']['mac_device'],
+                                            'device_id': element['fields']['device_id']}).count() > 0
+            if flag == False:
+                collecion_connected_devices.insert_one(element['fields'])

@@ -17,5 +17,3 @@ def upload_db():
     data = [data_aps, data_devices, data_connected_devices]
 
     request = requests.post(url=SERVER_ENDPOINT, json=data)
-    print(request)
-

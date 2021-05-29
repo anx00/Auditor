@@ -679,6 +679,12 @@ h3 {
     width: 40%;
 }
 
+@media (max-width: 767px) {
+    .collapsible {
+        width: 70%;
+    }
+}
+
 .collapsible:after {
     content: '\02795'; /* Unicode character for "plus" sign (+) */
     font-size: 1rem;
@@ -694,6 +700,15 @@ h3 {
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .collapsible:hover {
     background-color: #CD7272;
+}
+
+.security_info {
+    margin: 3rem;
+    padding: 1rem;
+
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(1, 113, 162, 1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(1, 113, 162, 1);
+    box-shadow: 0px 0px 5px 1px rgba(1, 113, 162, 1);
 }
 
 /** CSS PERSONAL SCAN **/

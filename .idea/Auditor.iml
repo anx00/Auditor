@@ -19,6 +19,7 @@
       <sourceFolder url="file://$MODULE_DIR$/wifi_audit/modo_monitor" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/wifi_audit/source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/wifi_audit/wifi_audit" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/APIServer/api" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -82,6 +82,14 @@
                             style="color: red">{{ ap.deauth_last_seen }}</span></p>
                 </div>
             {% endif %}
+            <div class="security_info">
+                <p style="font-weight: bold; color: red">OPN<span style="font-weight: normal; color: black">: No encryption. It's the less secure configuration for WiFi networks since it does not provide any security layer.</span></p>
+                <p style="font-weight: bold; color: orangered">WEP<span style="font-weight: normal; color: black">: Low security. This encryption system is easily vulnerable and it is not recommended to use. It was replaced for WPA.</span></p>
+                <p style="font-weight: bold; color: #ECD362">WPA<span style="font-weight: normal; color: black">: Temporary migration protocol to fix the deficiencies and vulnerabilities of WEP system. Because it is a migration protocol it keeps some WEP elements so it can be hacked relatively easily. It uses Temporal Key Integrity Protocol (TKIP) as encryption method.</span></p>
+                <p style="font-weight: bold; color: limegreen">WPA2<span style="font-weight: normal; color: black">: This system replaces WPA and provides a stronger security configuration. It uses AES (Advanced Encryption Standard) also known as CCMP instead of TKIP. The only problem with this configuration is the compatibility with older devices.</span></p>
+                <p style="font-weight: bold; color: limegreen">WPA2-PSK<span style="font-weight: normal; color: black">: The most typical configuration for domestic networks. It uses a Pre-shared-key (PSK) as authentication system.</span></p>
+                <p style="font-weight: bold; color: green">WPA2-802.1X<span style="font-weight: normal; color: black">: One of the most secure configuration as it does not use a pre shared key, instead it uses an authentication server.</span></p>
+            </div>
         </div>
     </div>
 {% endblock %}

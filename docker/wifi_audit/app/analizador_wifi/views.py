@@ -4,6 +4,7 @@ from analizador_wifi.local_scanner.scanner import arp_scan, get_connected_bssid,
 from analizador_wifi.models import dispositivos
 from django.contrib.auth.decorators import login_required
 from env import LOCAL_NETWORK
+from django.conf import settings
 
 
 # Create your views here.
@@ -13,12 +14,14 @@ def analizador_wifi(request):
     # result = arp_scan("10.25.131.197/16")
 
     connected_ap = get_connected_bssid()
+    device_id = settings.DEVICE_ID
 
     for mapping in result:
         if dispositivos.objects.filter(ip=mapping['IP']).exists() == False:
             dispositivos.objects.create(ip=mapping['IP'], mac=mapping['MAC'], nombre_dispositivo=mapping['name'],
                                         last_seen=mapping['last_seen'], connected_to=connected_ap,
-                                        vendor=mapping['vendor'], os="Unknown", osfamily="Unknown", type="Unknown")
+                                        vendor=mapping['vendor'], os="Unknown", osfamily="Unknown", type="Unknown",
+                                        device_id=device_id)
         else:
             dispositivos.objects.filter(ip=mapping['IP']).update(last_seen=mapping['last_seen'])
 

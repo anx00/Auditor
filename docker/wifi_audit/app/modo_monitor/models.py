@@ -14,6 +14,8 @@ class access_point(models.Model):
     suite = models.CharField(max_length=30)
     deauth_last_seen = models.CharField(max_length=50)
     deauth_first_seen = models.CharField(max_length=50)
+    timestamp = models.CharField(max_length=50)
+    device_id = models.CharField(max_length=30)
 
 
     signal_quality = models.IntegerField()
@@ -37,6 +39,7 @@ class device(models.Model):
     connected_to = models.CharField(max_length=40)
     mac_device = models.CharField(max_length=40)
     manufacturer = models.CharField(max_length=50)
+    device_id = models.CharField(max_length=30)
 
     ap = models.ForeignKey(access_point, on_delete=models.CASCADE)
 

@@ -152,7 +152,7 @@ dot11_subtypes = {
 
 
 # Detect Beacon frames to detect AP and characteristics
-def beacon_packet(packet):
+def beacon_packet(time, packet):
     # Get SSID of AP
     raw_ssid = packet[Dot11Elt].info.decode('utf-8')
     ssid = raw_ssid.strip() if '\x00' not in raw_ssid and raw_ssid != '' else '[HIDDEN SSID]'
@@ -174,6 +174,8 @@ def beacon_packet(packet):
 
     # Get Spectrum Frecuency of AP
     spectrum = channelflags.split('+')[1]
+    if spectrum[0] == '2':
+        spectrum = '2.4Ghz'
 
     # Get Frecuency of AP
     frecuency = radiotap.ChannelFrequency
@@ -235,6 +237,8 @@ def beacon_packet(packet):
     except:
         cipher = "None"
 
+    timestamp = time
+
     # Make sure that AP is not already on list and update neccesary data if we already scanned it
     if bssid not in ap_list:  # HACER COMPROBACIÓN DE QUE TAMBIÉN TENGAN DISTINTO NOMBRE PQ PUEDEN TENER MISMA MAC Y UNA 5G Y OTRA 2G
         ap_list.append(bssid)
@@ -247,7 +251,7 @@ def beacon_packet(packet):
                           'spectrum': spectrum, 'manufacturer': manufacturer, 'enc': enc, 'crypto': crypto,
                           'frecuency': frecuency, 'rates': newrates, 'central_channel': central_channel,
                           'channel_bandwidth': channel_bandwidth, 'fspl': lowest_fspl, 'cipher': cipher, 'suite': suit,
-                          'beacons': beacons, 'clients': []}
+                          'beacons': beacons, 'timestamp': timestamp, 'clients': []}
 
     # Update fspl if lower fspl found
     else:
@@ -262,7 +266,7 @@ def beacon_packet(packet):
                           'spectrum': spectrum, 'manufacturer': manufacturer, 'enc': enc, 'crypto': crypto,
                           'frecuency': frecuency, 'rates': newrates, 'central_channel': central_channel,
                           'channel_bandwidth': channel_bandwidth, 'fspl': lowest_fspl, 'cipher': cipher, 'suite': suit,
-                          'beacons': beacons, 'clients': []}
+                          'beacons': beacons, 'timestamp': timestamp, 'clients': []}
 
 
 # Sniff Data & Control Frames to detect connected devices to AP
@@ -312,7 +316,7 @@ def sniffer(p):
 
         elif p.haslayer(Dot11Beacon):
 
-            beacon_packet(p)
+            beacon_packet(time, p)
 
         elif p.getlayer(Dot11).type in [1, 2]:
             datacontrol_packet(p)

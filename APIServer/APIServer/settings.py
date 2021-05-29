@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+#from ..api.configuration import MONGO_DB, MONGO_USER, MONGO_PASSWORD, MONGO_PORT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,14 +78,12 @@ WSGI_APPLICATION = 'APIServer.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'server',
-        'USER': 'postgres',
-        'PASSWORD': 'DBpassword_123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    }
+  'default': {
+      'ENGINE': 'djongo',
+      'NAME': 'server',
+      'HOST': '127.0.0.1',
+      'PORT': 27017
+  },
 }
 
 

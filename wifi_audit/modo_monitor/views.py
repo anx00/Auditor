@@ -12,6 +12,7 @@ from wifi_audit.celery import app
 from . import utils
 from .tasks import intensive_scan
 from env import MONITOR_INTERFACE
+from django.conf import settings
 
 # Create your views here.
 @login_required(login_url='login')
@@ -40,7 +41,10 @@ def modo_monitor(request):
         cipher = aps_temp[ap]['cipher']
         suite = aps_temp[ap]['suite']
         beacons = aps_temp[ap]['beacons']
+        timestamp = aps_temp[ap]['timestamp']
         clientes = aps_temp[ap]['clients']
+        device_id = settings.DEVICE_ID
+
         if networkscanner.deauth_packets(ap) != 1:
             deauth_frames = networkscanner.deauth_packets(ap)['contador']
             deauth_frames_first_seen = networkscanner.deauth_packets(ap)['first_seen']
@@ -52,11 +56,11 @@ def modo_monitor(request):
             deauth_frames_last_seen = ""
 
         if access_point.objects.filter(bssid=ap.upper()).exists() == False:
-            access_point.objects.create(essid=essid, bssid=bssid, rssi=rssi, canal=canal, encriptacion=crypto,
+            access_point.objects.create(essid=essid, bssid=bssid, device_id=device_id, rssi=rssi, canal=canal, encriptacion=crypto,
                                         spectrum=spectrum, frecuencia=frecuencia, signal_quality=signal_quality,
                                         rates=rates, manufacturer=manufacturer, central_channel=central_channel,
                                         channel_bandwidth=channel_bandwidth, fspl=fspl, cipher=cipher, suite=suite,
-                                        beacons=beacons, deauth_frames=deauth_frames,
+                                        beacons=beacons, timestamp=timestamp, deauth_frames=deauth_frames,
                                         deauth_last_seen=deauth_frames_last_seen,
                                         deauth_first_seen=deauth_frames_first_seen)
 
@@ -66,6 +70,7 @@ def modo_monitor(request):
                                                             central_channel=central_channel,
                                                             channel_bandwidth=channel_bandwidth, fspl=fspl,
                                                             cipher=cipher, suite=suite, beacons=beacons,
+                                                            timestamp=timestamp,
                                                             deauth_frames=deauth_frames,
                                                             deauth_last_seen=deauth_frames_last_seen,
                                                             deauth_first_seen=deauth_frames_first_seen)
@@ -74,9 +79,10 @@ def modo_monitor(request):
                     cliente = client['mac'].upper()
                     connected_to = client['connected_to'].upper()
                     manufacturer = client['manufacturer']
+                    device_id = settings.DEVICE_ID
                     if device.objects.filter(mac_device=cliente).exists() == False:
                         device.objects.create(connected_to=connected_to, mac_device=cliente, manufacturer=manufacturer,
-                                              ap=access_point.objects.get(bssid=connected_to))
+                                              ap=access_point.objects.get(bssid=connected_to), device_id=device_id)
 
     aps = access_point.objects.all().order_by('-rssi')
     context = {"aps": aps}

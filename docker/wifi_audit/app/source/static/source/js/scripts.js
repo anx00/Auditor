@@ -247,3 +247,22 @@ function collapse(element) {
         content.style.display = "block";
     }
 }
+
+/** RSSI COLOR **/
+
+rssi_color = document.getElementsByClassName('rssi')
+for (var i = 0; i < rssi_color.length; i++) {
+    console.log(rssi_color[i].innerHTML)
+    if (rssi_color[i].innerHTML <= -80) {
+        rssi_color[i].style.color = "red"
+    }
+    else if (rssi_color[i].innerHTML <= -70) {
+        rssi_color[i].style.color = "orange"
+    }
+    else if (rssi_color[i].innerHTML <= -50) {
+        rssi_color[i].style.color = "limegreen"
+    }
+    else {
+        rssi_color[i].style.color = "green"
+    }
+}

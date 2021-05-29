@@ -14,6 +14,7 @@ class dispositivos(models.Model):
     nombre_dispositivo = models.CharField(max_length=40)
     last_seen = models.CharField(max_length=40) #Cambiar estos dos a datetimefield
     connected_to = models.CharField(max_length=40)
+    device_id = models.CharField(max_length=30)
 
     class Meta:
         verbose_name = 'Dispositivo'

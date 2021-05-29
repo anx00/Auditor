@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import getmac
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,8 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CRONJOBS = [
-    ('* * * * *', 'source.cron.upload_db')
+    ('0 * * * *', 'source.cron.upload_db')
 ]
+
+DEVICE_ID = getmac.get_mac_address().replace(':', '')
 
 # Application definition
 
@@ -136,3 +139,4 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -1,5 +1,5 @@
 import os
 
 LOCAL_NETWORK = os.getenv('LOCAL_NETWORK', '192.168.1.0/24')
-MONITOR_INTERFACE = os.getenv('MONITOR_INTERFACE', 'eth0')
+MONITOR_INTERFACE = os.getenv('MONITOR_INTERFACE', 'wlxdc4ef405cd9f')
 SERVER_ENDPOINT = os.getenv('SERVER_ENDPOINT', 'http://127.0.0.1:7000/api')

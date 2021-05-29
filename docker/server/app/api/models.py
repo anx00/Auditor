@@ -7,8 +7,6 @@ from django.db import models
 # Create your models here.
 
 class access_point(models.Model):
-
-    local_id = models.IntegerField()
     essid = models.CharField(max_length=40)
     bssid = models.CharField(max_length=40)
     encriptacion = models.CharField(max_length=40)
@@ -20,6 +18,8 @@ class access_point(models.Model):
     suite = models.CharField(max_length=30)
     deauth_last_seen = models.CharField(max_length=50)
     deauth_first_seen = models.CharField(max_length=50)
+    timestamp = models.CharField(max_length=50)
+    device_id = models.CharField(max_length=30)
 
 
     signal_quality = models.IntegerField()

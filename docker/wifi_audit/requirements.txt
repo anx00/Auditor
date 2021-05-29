@@ -8,3 +8,4 @@ requests==2.25.1
 python3-nmap==1.5.0
 billiard==3.6.4.0
 psycopg2==2.8.6
+get-mac==0.8.2

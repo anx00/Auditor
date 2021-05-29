@@ -4,6 +4,7 @@ from modo_monitor.models import access_point, device
 from analizador_wifi.models import dispositivos
 from env import SERVER_ENDPOINT
 
+
 def upload_db():
 
     aps = access_point.objects.all().order_by('id')
@@ -17,5 +18,3 @@ def upload_db():
     data = [data_aps, data_devices, data_connected_devices]
 
     request = requests.post(url=SERVER_ENDPOINT, json=data)
-
-
