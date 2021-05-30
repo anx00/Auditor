@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 from env import MONGO_USER, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DB
 
 # from ..api.configuration import MONGO_DB, MONGO_USER, MONGO_PASSWORD, MONGO_PORT
@@ -119,6 +120,15 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Data directory
+DATA_DIR = "/var/www/data"
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+STATIC_ROOT = os.path.join(DATA_DIR, "static")
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

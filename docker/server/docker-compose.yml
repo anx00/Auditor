@@ -26,6 +26,7 @@ services:
       MONGO_HOST: server_db
       MONGO_PORT: 27017
       MONGO_DB: mongodb
+      MONGO_AUTH_SOURCE: admin
       
 volumes: 
     server_db_data:
