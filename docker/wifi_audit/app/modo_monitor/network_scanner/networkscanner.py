@@ -167,7 +167,10 @@ def beacon_packet(time, packet):
     rssi = radiotap.dBm_AntSignal
 
     # Get Signal Quality of AP (not all Antennas are capable of get this variable)
-    signal_quality = radiotap.Lock_Quality
+    try:
+        signal_quality = radiotap.Lock_Quality
+    except:
+        signal_quality = 0
 
     # Get Channel Flags for further use
     channelflags = str(radiotap.ChannelFlags)
@@ -181,10 +184,16 @@ def beacon_packet(time, packet):
     frecuency = radiotap.ChannelFrequency
 
     # Get Central Channel of AP based in its Frecuency
-    central_channel = channel_frecuency[frecuency]
+    try:
+        central_channel = channel_frecuency[frecuency]
+    except:
+        central_channel = 0
 
     # Get Channel Bandwidth of AP
-    channel_bandwidth = channel_width[packet[Dot11EltHTCapabilities].Supported_Channel_Width][:-3]
+    try:
+        channel_bandwidth = channel_width[packet[Dot11EltHTCapabilities].Supported_Channel_Width][:-3]
+    except:
+        channel_bandwidth = "0"
 
     # Get nstats for further use
     nstats = packet[Dot11Beacon].network_stats()

@@ -61,8 +61,10 @@
                 <p></p>
                 <p class="datos-ap__informacion__dato">Signal Strength (RSSI)</p><span
                     class="datos-especificos__ap">{{ ap.rssi }}dBm</span>
-                <p class="datos-ap__informacion__dato">Signal Quality</p><span
-                    class="datos-especificos__ap">{{ ap.signal_quality }}%</span>
+                {% if ap.signal_quality != 0 %}
+                    <p class="datos-ap__informacion__dato">Signal Quality</p><span
+                        class="datos-especificos__ap">{{ ap.signal_quality }}%</span>
+                {% endif %}
                 <p class="datos-ap__informacion__dato">Channel</p><span
                     class="datos-especificos__ap">{{ ap.canal }}</span>
                 <p class="datos-ap__informacion__dato">Distance to AP</p><span
