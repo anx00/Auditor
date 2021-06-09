@@ -57,7 +57,7 @@
                 </label>
             </div>
             <div class="datos-ap__informacion">
-                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.essid }}</span>
+                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.ssid }}</span>
                 <p></p>
                 <p class="datos-ap__informacion__dato">Signal Strength (RSSI)</p><span
                     class="datos-especificos__ap">{{ ap.rssi }}dBm</span>
@@ -66,11 +66,11 @@
                         class="datos-especificos__ap">{{ ap.signal_quality }}%</span>
                 {% endif %}
                 <p class="datos-ap__informacion__dato">Channel</p><span
-                    class="datos-especificos__ap">{{ ap.canal }}</span>
+                    class="datos-especificos__ap">{{ ap.channel }}</span>
                 <p class="datos-ap__informacion__dato">Distance to AP</p><span
-                    class="datos-especificos__ap">~ {{ ap.fspl }}m</span>
+                    class="datos-especificos__ap">~ {{ ap.distance_ap }}m</span>
                 <p class="datos-ap__informacion__dato">Radio Frecuency</p><span
-                    class="datos-especificos__ap">{{ ap.frecuencia }}Mhz</span>
+                    class="datos-especificos__ap">{{ ap.frecuency }}Mhz</span>
                 <p class="datos-ap__informacion__dato">Radio Frecuency Spectrum</p><span
                     class="datos-especificos__ap">{{ ap.spectrum }}</span>
                 <p class="datos-ap__informacion__dato">Central Channel Frecuency</p><span

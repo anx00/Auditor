@@ -17,29 +17,25 @@ from django.conf import settings
 # Create your views here.
 @login_required(login_url='login')
 def modo_monitor(request):
-    # Así se crea un objeto y se pasa a la BD"
-
-    default_interface = connect_to_ap.check_interface_mode("monitor")
-    interface = default_interface  # meter esto en los ficheros de python de funciones
 
     aps_temp = networkscanner.start_sniffing(MONITOR_INTERFACE)
 
     for ap in aps_temp:
         bssid = ap.upper()
-        essid = aps_temp[ap]['ssid']
+        ssid = aps_temp[ap]['ssid']
         rssi = aps_temp[ap]['rssi']
-        canal = aps_temp[ap]['channel']
-        crypto = utils.convert_list_to_string(aps_temp[ap]['crypto'], ', ')
+        channel = aps_temp[ap]['channel']
+        security_protocol = utils.convert_list_to_string(aps_temp[ap]['crypto'], ', ')
         spectrum = aps_temp[ap]['spectrum']
-        frecuencia = aps_temp[ap]['frecuency']
+        frecuency = aps_temp[ap]['frecuency']
         signal_quality = aps_temp[ap]['signal_quality']
         rates = utils.convert_list_to_string(aps_temp[ap]['rates'], ', ')
         central_channel = aps_temp[ap]['central_channel']
         channel_bandwidth = aps_temp[ap]['channel_bandwidth']
-        fspl = aps_temp[ap]['fspl']
+        distance_ap = aps_temp[ap]['fspl']
         manufacturer = aps_temp[ap]['manufacturer']
-        cipher = aps_temp[ap]['cipher']
-        suite = aps_temp[ap]['suite']
+        cipher_algorithm = aps_temp[ap]['cipher']
+        auth_crypto = aps_temp[ap]['suite']
         beacons = aps_temp[ap]['beacons']
         timestamp = aps_temp[ap]['timestamp']
         clientes = aps_temp[ap]['clients']
@@ -56,20 +52,20 @@ def modo_monitor(request):
             deauth_frames_last_seen = ""
 
         if access_point.objects.filter(bssid=ap.upper()).exists() == False:
-            access_point.objects.create(essid=essid, bssid=bssid, device_id=device_id, rssi=rssi, canal=canal, encriptacion=crypto,
-                                        spectrum=spectrum, frecuencia=frecuencia, signal_quality=signal_quality,
+            access_point.objects.create(ssid=ssid, bssid=bssid, device_id=device_id, rssi=rssi, channel=channel, security_protocol=security_protocol,
+                                        spectrum=spectrum, frecuency=frecuency, signal_quality=signal_quality,
                                         rates=rates, manufacturer=manufacturer, central_channel=central_channel,
-                                        channel_bandwidth=channel_bandwidth, fspl=fspl, cipher=cipher, suite=suite,
+                                        channel_bandwidth=channel_bandwidth, distance_ap=distance_ap, cipher_algorithm=cipher_algorithm, auth_crypto=auth_crypto,
                                         beacons=beacons, timestamp=timestamp, deauth_frames=deauth_frames,
                                         deauth_last_seen=deauth_frames_last_seen,
                                         deauth_first_seen=deauth_frames_first_seen)
 
         else:
-            access_point.objects.filter(bssid=bssid).update(rssi=rssi, canal=canal, frecuencia=frecuencia,
+            access_point.objects.filter(bssid=bssid).update(rssi=rssi, channel=channel, frecuency=frecuency,
                                                             signal_quality=signal_quality, rates=rates,
                                                             central_channel=central_channel,
-                                                            channel_bandwidth=channel_bandwidth, fspl=fspl,
-                                                            cipher=cipher, suite=suite, beacons=beacons,
+                                                            channel_bandwidth=channel_bandwidth, distance_ap=distance_ap,
+                                                            cipher_algorithm=cipher_algorithm, auth_crypto=auth_crypto, beacons=beacons,
                                                             timestamp=timestamp,
                                                             deauth_frames=deauth_frames,
                                                             deauth_last_seen=deauth_frames_last_seen,
@@ -80,9 +76,9 @@ def modo_monitor(request):
                     connected_to = client['connected_to'].upper()
                     manufacturer = client['manufacturer']
                     device_id = settings.DEVICE_ID
-                    if device.objects.filter(mac_device=cliente).exists() == False:
-                        device.objects.create(connected_to=connected_to, mac_device=cliente, manufacturer=manufacturer,
-                                              ap=access_point.objects.get(bssid=connected_to), device_id=device_id)
+                    if device.objects.filter(mac=cliente).exists() == False:
+                        device.objects.create(connected_to=connected_to, mac=cliente, manufacturer=manufacturer,
+                                              ap_id=access_point.objects.get(bssid=connected_to), device_id=device_id)
 
     aps = access_point.objects.all().order_by('-rssi')
     context = {"aps": aps}
@@ -133,7 +129,7 @@ def ap_senal(request, id):
 def connection(request, id):
     ap = access_point.objects.get(id=id)
 
-    ssid = ap.essid
+    ssid = ap.ssid
 
     if connect_to_ap.check_connected(ssid) == 0:
         message = "Already connected to " + ssid
@@ -148,7 +144,7 @@ def connection(request, id):
 def connected(request, id):
     ap = access_point.objects.get(id=id)
 
-    ssid = ap.essid
+    ssid = ap.ssid
 
     password = request.POST.get('password')
 
@@ -156,14 +152,14 @@ def connected(request, id):
 
     if news == []:
         message = "Incorrect Password or AP out of range"
-        new_essid = ""
+        new_ssid = ""
         new_bssid = ""
     else:
-        new_essid = news[0]
+        new_ssid = news[0]
         new_bssid = news[1]
         message = "Connected"
 
-    context = {"ssid": new_essid, "bssid": new_bssid, "message": message}
+    context = {"ssid": new_ssid, "bssid": new_bssid, "message": message}
 
     return render(request, "modo_monitor/connected.html", context)
 

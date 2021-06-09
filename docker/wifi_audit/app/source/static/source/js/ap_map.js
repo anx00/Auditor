@@ -52,13 +52,13 @@ function show(data1, data2) {
         }
         nodes.push({
                 id: `${device.id}`,
-                ssid: `${device.essid}`,
+                ssid: `${device.ssid}`,
                 bssid: `${device.bssid}`,
-                encriptacion: `${device.encriptacion}`,
-                canal: `${device.canal}`,
-                fspl: `${device.fspl}`,
+                security_protocol: `${device.security_protocol}`,
+                channel: `${device.channel}`,
+                distance_ap: `${device.distance_ap}`,
                 deauth: `${device.deauth_frames}`,
-                label: `${device.essid}`,
+                label: `${device.ssid}`,
                 font: {
                     color: style,
                 },
@@ -70,7 +70,7 @@ function show(data1, data2) {
         )
         edges.push({
             from: 0,
-            length: `${device.fspl}` * 2,
+            length: `${device.distance_ap}` * 2,
             to: `${device.id}`,
             /*label: `~${device.fspl}m`,*/
             color: {
@@ -81,9 +81,9 @@ function show(data1, data2) {
             if (`${client.connected_to}` === `${device.bssid}`) {
                 nodes.push({
                         id: `${device.id}` + "-" + `${client.id}`,
-                        mac: `${client.mac_device}`,
+                        mac: `${client.mac}`,
                         vendor: `${client.manufacturer}`,
-                        label: `${client.mac_device}`,
+                        label: `${client.mac}`,
                         type: "device",
                         image: dispositivo,
                         shape: "image",
@@ -192,9 +192,9 @@ function show(data1, data2) {
                         + "<li><span style='color: darkgrey'>ID：</span>" + clickNodeList.id + "</li>"
                         + "<li><span style='color: darkgrey'>SSID：</span>" + clickNodeList.ssid + "</li>"
                         + "<li><span style='color: darkgrey'>BSSID：</span>" + clickNodeList.bssid + "</li>"
-                        + "<li><span style='color: darkgrey'>SECURITY：</span>" + clickNodeList.encriptacion + "</li>"
-                        + "<li><span style='color: darkgrey'>CHANNEL：</span>" + clickNodeList.canal + "</li>"
-                        + "<li><span style='color: darkgrey'>DISTANCE：~</span>" + clickNodeList.fspl + "m" + "</li>"
+                        + "<li><span style='color: darkgrey'>SECURITY：</span>" + clickNodeList.security_protocol + "</li>"
+                        + "<li><span style='color: darkgrey'>CHANNEL：</span>" + clickNodeList.channel + "</li>"
+                        + "<li><span style='color: darkgrey'>DISTANCE：~</span>" + clickNodeList.distance_ap + "m" + "</li>"
                         + "<li><span style='color: darkgrey'>VENDOR：</span>" + clickNodeList.manufacturer + "</li>"
                         + "</ul>"
                 } else {
@@ -209,9 +209,9 @@ function show(data1, data2) {
                         + "<li><span style='color: darkgrey'>ID：</span>" + clickNodeList.id + "</li>"
                         + "<li><span style='color: darkgrey'>SSID：</span>" + clickNodeList.ssid + "</li>"
                         + "<li><span style='color: darkgrey'>BSSID：</span>" + clickNodeList.bssid + "</li>"
-                        + "<li><span style='color: darkgrey'>SECURITY：</span>" + clickNodeList.encriptacion + "</li>"
-                        + "<li><span style='color: darkgrey'>CHANNEL：</span>" + clickNodeList.canal + "</li>"
-                        + "<li><span style='color: darkgrey'>DISTANCE：~</span>" + clickNodeList.fspl + "m" + "</li>"
+                        + "<li><span style='color: darkgrey'>SECURITY：</span>" + clickNodeList.security_protocol + "</li>"
+                        + "<li><span style='color: darkgrey'>CHANNEL：</span>" + clickNodeList.channel + "</li>"
+                        + "<li><span style='color: darkgrey'>DISTANCE：~</span>" + clickNodeList.distance_ap + "m" + "</li>"
                         + "<li><span style='color: darkgrey'>VENDOR：</span>" + clickNodeList.manufacturer + "</li>"
                         + "<li style='color: red'>DEAUTH FRAMES DETECTED：" + clickNodeList.deauth + "</li>"
                         + "</ul>"

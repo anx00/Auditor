@@ -45,11 +45,11 @@
                 <p class="datos-ap__informacion__dato">MAC Address</p><span
                     class="datos-especificos__ap">{{ dispositivo.mac }}</span>
                 <p class="datos-ap__informacion__dato">Hostname</p><span
-                    class="datos-especificos__ap">{{ dispositivo.nombre_dispositivo }}</span>
+                    class="datos-especificos__ap">{{ dispositivo.hostname }}</span>
                 <p class="datos-ap__informacion__dato">Type</p><span
                     class="datos-especificos__ap">{{ data.type|title }}</span>
                 <p class="datos-ap__informacion__dato">Vendor</p><span
-                    class="datos-especificos__ap" id="vendor">{{ dispositivo.vendor }}</span>
+                    class="datos-especificos__ap" id="vendor">{{ dispositivo.manufacturer }}</span>
                 <p class="datos-ap__informacion__dato">OS</p><span
                     class="datos-especificos__ap">{{ data.name }}</span>
                 <p class="datos-ap__informacion__dato">OS Family</p><span
@@ -57,7 +57,7 @@
                 <p class="datos-ap__informacion__dato">Connected to</p><span
                     class="datos-especificos__ap">{{ connected_ap }}</span>
                 <p class="datos-ap__informacion__dato">Last Seen</p><span
-                    class="datos-especificos__ap">{{ dispositivo.last_seen }}</span>
+                    class="datos-especificos__ap">{{ dispositivo.timestamp }}</span>
             </div>
             {% comment %}
             <button id="open_ports" class="datos-ap__informacion__dato collapsible2">SCAN OPEN PORTS

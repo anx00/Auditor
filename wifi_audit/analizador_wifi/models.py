@@ -7,12 +7,12 @@ class dispositivos(models.Model):
     id = models.BigAutoField(primary_key=True)
     ip = models.CharField(max_length=20)
     mac = models.CharField(max_length=20)
-    vendor = models.CharField(max_length=50)
-    os = models.CharField(max_length=100)
-    osfamily = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
-    nombre_dispositivo = models.CharField(max_length=40)
-    last_seen = models.CharField(max_length=40) #Cambiar estos dos a datetimefield
+    manufacturer = models.CharField(max_length=50)
+    os_system = models.CharField(max_length=100)
+    os_family = models.CharField(max_length=50)
+    device_type = models.CharField(max_length=50)
+    hostname = models.CharField(max_length=40)
+    timestamp = models.CharField(max_length=40)
     connected_to = models.CharField(max_length=40)
     device_id = models.CharField(max_length=30)
 

@@ -60,7 +60,7 @@
             <div class="conectividad">
                 <div class="grid_aux">
                     {% if ap %}
-                        <h2 style="font-weight: bold">{{ ap.essid }}</h2>
+                        <h2 style="font-weight: bold">{{ ap.ssid }}</h2>
                         <form class="form-connect" action="/aps/{{ ap.id }}/connected" method="POST">{% csrf_token %}
                             <label><b>Password: </b></label>
                             <input class="passwd_input" type="password" name="password">

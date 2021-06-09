@@ -169,6 +169,8 @@ def beacon_packet(time, packet):
     # Get Signal Quality of AP (not all Antennas are capable of get this variable)
     try:
         signal_quality = radiotap.Lock_Quality
+        if not isinstance(signal_quality, int):
+            signal_quality = 0
     except:
         signal_quality = 0
 

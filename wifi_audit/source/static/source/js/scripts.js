@@ -252,7 +252,6 @@ function collapse(element) {
 
 rssi_color = document.getElementsByClassName('rssi')
 for (var i = 0; i < rssi_color.length; i++) {
-    console.log(rssi_color[i].innerHTML)
     if (rssi_color[i].innerHTML <= -80) {
         rssi_color[i].style.color = "red"
     }

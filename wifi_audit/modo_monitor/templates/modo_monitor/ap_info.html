@@ -58,14 +58,14 @@
                 </label>
             </div>
             <div class="datos-ap__informacion">
-                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.essid }}</span>
+                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.ssid }}</span>
                 <p></p>
                 <p class="datos-ap__informacion__dato">BSSID</p><span
                     class="datos-especificos__ap">{{ ap.bssid }}</span>
                 <p class="datos-ap__informacion__dato">Channel</p><span
-                    class="datos-especificos__ap">{{ ap.canal }}</span>
+                    class="datos-especificos__ap">{{ ap.channel }}</span>
                 <p class="datos-ap__informacion__dato">Distance to AP</p><span
-                    class="datos-especificos__ap">~ {{ ap.fspl }}m</span>
+                    class="datos-especificos__ap">~ {{ ap.distance_ap }}m</span>
                 <p class="datos-ap__informacion__dato">Supported Rates</p><span
                     class="datos-especificos__ap">{{ ap.rates }} [Mb/s]</span>
                 <p class="datos-ap__informacion__dato">Vendor</p><span
@@ -77,7 +77,7 @@
                 <p class="datos-ap__informacion__dato">Connected Devices</p>
                 {% if devices %}
                     {% for device in devices %}
-                        <span class="datos-especificos__ap">{{ device.mac_device | upper }} ( {{ device.manufacturer }} )</span>
+                        <span class="datos-especificos__ap">{{ device.mac | upper }} ( {{ device.manufacturer }} )</span>
                     {% endfor %}
                 {% else %}
                     <span class="datos-especificos__ap">None</span>

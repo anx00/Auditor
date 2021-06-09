@@ -40,7 +40,7 @@ def save_data_mongo(data):
     json_connected_devices = json.loads(data_connected_devices)
     if json_connected_devices != []:
         for element in json_connected_devices:
-            flag = collecion_connected_devices.find({'mac_device': element['fields']['mac_device'],
+            flag = collecion_connected_devices.find({'mac': element['fields']['mac'],
                                             'device_id': element['fields']['device_id']}).count() > 0
             if flag == False:
                 collecion_connected_devices.insert_one(element['fields'])

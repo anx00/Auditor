@@ -18,12 +18,12 @@ def analizador_wifi(request):
 
     for mapping in result:
         if dispositivos.objects.filter(ip=mapping['IP']).exists() == False:
-            dispositivos.objects.create(ip=mapping['IP'], mac=mapping['MAC'], nombre_dispositivo=mapping['name'],
-                                        last_seen=mapping['last_seen'], connected_to=connected_ap,
-                                        vendor=mapping['vendor'], os="Unknown", osfamily="Unknown", type="Unknown",
+            dispositivos.objects.create(ip=mapping['IP'], mac=mapping['MAC'], hostname=mapping['name'],
+                                        timestamp=mapping['last_seen'], connected_to=connected_ap,
+                                        manufacturer=mapping['vendor'], os_system="Unknown", os_family="Unknown", device_type="Unknown",
                                         device_id=device_id)
         else:
-            dispositivos.objects.filter(ip=mapping['IP']).update(last_seen=mapping['last_seen'])
+            dispositivos.objects.filter(ip=mapping['IP']).update(timestamp=mapping['last_seen'])
 
     dispositivo = dispositivos.objects.filter(connected_to=connected_ap).order_by('id')
 
@@ -50,12 +50,12 @@ def dispositivo_info(request, id):
     dispositivo = dispositivos.objects.get(id=id)
 
     connected_ap = get_connected_ssid()
-    data = {"name": dispositivo.os, "osfamily": dispositivo.osfamily, "type": dispositivo.type}
+    data = {"name": dispositivo.os_system, "osfamily": dispositivo.os_family, "type": dispositivo.device_type}
 
-    if dispositivo.os == "Unknown" and dispositivo.osfamily == "Unknown" and dispositivo.type == "Unknown":
+    if dispositivo.os_system == "Unknown" and dispositivo.os_family == "Unknown" and dispositivo.device_type == "Unknown":
         data = os_detection(dispositivo.ip)
 
-        dispositivos.objects.filter(id=id).update(os=data['name'], osfamily=data['osfamily'], type=data['type'])
+        dispositivos.objects.filter(id=id).update(os_system=data['name'], os_family=data['osfamily'], device_type=data['type'])
         context = {"dispositivo": dispositivo, "connected_ap": connected_ap, "data": data}
 
         return render(request, "analizador_wifi/dispositivo_info.html", context)

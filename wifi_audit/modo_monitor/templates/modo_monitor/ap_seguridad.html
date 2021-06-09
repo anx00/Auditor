@@ -58,14 +58,14 @@
                 </label>
             </div>
             <div class="datos-ap__informacion">
-                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.essid }}</span>
+                <p class="datos-ap__informacion__dato">SSID</p><span class="datos-especificos__ap">{{ ap.ssid }}</span>
                 <p></p>
                 <p class="datos-ap__informacion__dato">Security</p><span
-                    class="datos-especificos__ap">{{ ap.encriptacion }}</span>
+                    class="datos-especificos__ap">{{ ap.security_protocol }}</span>
                 <p class="datos-ap__informacion__dato">Security Suite</p><span
-                    class="datos-especificos__ap">{{ ap.suite }}</span>
+                    class="datos-especificos__ap">{{ ap.auth_crypto }}</span>
                 <p class="datos-ap__informacion__dato">Cipher Algorithm</p><span
-                    class="datos-especificos__ap">{{ ap.cipher }}</span>
+                    class="datos-especificos__ap">{{ ap.cipher_algorithm }}</span>
             </div>
             {% if ap.deauth_frames %}
                 <button type="button" class="datos-ap__informacion__dato collapsible">DEAUTHENTICATION FRAMES DETECTED

@@ -44,10 +44,10 @@
                 {% for ap in aps %}
                     <tr class="redes-wifi__filas nohover" onclick="showData();">
                         <td class="redes-wifi__filas__columnas cursor-wait" style="width: 10%;">{{ ap.id }}</td>
-                        <td class="redes-wifi__filas__columnas cursor-wait" style="width: 25%;">{{ ap.essid }}</td>
+                        <td class="redes-wifi__filas__columnas cursor-wait" style="width: 25%;">{{ ap.ssid }}</td>
                         <td class="redes-wifi__filas__columnas cursor-wait" style="width: 25%;">{{ ap.bssid }}</td>
                         <td class="redes-wifi__filas__columnas cursor-wait " style="width: 10%;">{{ ap.rssi }}</td>
-                        <td class="redes-wifi__filas__columnas cursor-wait" style="width: 10%;">{{ ap.canal }}</td>
+                        <td class="redes-wifi__filas__columnas cursor-wait" style="width: 10%;">{{ ap.channel }}</td>
                         <td class="redes-wifi__filas__columnas cursor-wait"
                             style="width: 20%;">{{ ap.spectrum }}</td>
                     </tr>
