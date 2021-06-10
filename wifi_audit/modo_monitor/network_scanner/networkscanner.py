@@ -193,7 +193,8 @@ def beacon_packet(time, packet):
 
     # Get Channel Bandwidth of AP
     try:
-        channel_bandwidth = channel_width[packet[Dot11EltHTCapabilities].Supported_Channel_Width][:-3]
+        cb_layer = packet[Dot11EltHTCapabilities].Supported_Channel_Width
+        channel_bandwidth = channel_width[cb_layer][:-3]
     except:
         channel_bandwidth = "0"
 
@@ -222,13 +223,12 @@ def beacon_packet(time, packet):
     channel = 0
     try:
         channel = packet[Dot11EltDSSSet].channel
-        # dsss = packet[Dot11EltDSSSet].id
     except:
         channel = central_channel
 
     # Get Supported and Extended Rates of AP
-    rates = nstats['rates']
     newrates = []
+    rates = nstats['rates']
     for rate in rates:
         newrates.append(str(rate))
 
@@ -325,11 +325,10 @@ def sniffer(p):
 
             deauth_packet(time, p)
 
-        elif p.haslayer(Dot11Beacon):
 
-            beacon_packet(time, p)
 
         elif p.getlayer(Dot11).type in [1, 2]:
+
             datacontrol_packet(p)
 
 
@@ -342,10 +341,9 @@ def deauth_packets(ap):
 
 
 # Changes channel randomly in range(1,15)
-def channel_hopper():
+def channel_hopper(interface):
     list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 36, 40, 44, 48]
-    # Definimos la interfaz
-    interface = MONITOR_INTERFACE
+
     while True:
         try:
             # channel = random.randrange(1, 15)
@@ -363,7 +361,7 @@ def start_sniffing(interface):
     utils.restart_interface()
 
     # Creating a multi process to perform channel hoping
-    p = Process(target=channel_hopper)
+    p = Process(target=channel_hopper, args=(interface,))
     p.start()
 
     # Start Sniffing
