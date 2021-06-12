@@ -282,32 +282,32 @@ def beacon_packet(time, packet):
 
 # Sniff Data & Control Frames to detect connected devices to AP
 def datacontrol_packet(packet):
-    if utils.noise_filter(packet.addr1, packet.addr2):
-        return
 
-    sn = packet.getlayer(Dot11).addr2
-    rc = packet.getlayer(Dot11).addr1
-    if sn not in black_list and rc not in black_list:
-        if sn in ap_list:
-            if rc not in cliente_usado:
-                client_dict = {'mac': rc, 'connected_to': sn, 'manufacturer': utils.manf2(rc.upper()[:8])}
-                ap_dict[sn]['clients'].append(client_dict)
-                cliente_usado.append(rc)
+    ra = packet.getlayer(Dot11).addr1
+    sa = packet.getlayer(Dot11).addr2
 
-        elif rc in ap_list:
-            if sn not in cliente_usado:
-                client_dict = {'mac': sn, 'connected_to': rc, 'manufacturer': utils.manf2(sn.upper()[:8])}
-                ap_dict[rc]['clients'].append(client_dict)
-                cliente_usado.append(sn)
+    if not utils.noise_filter(sa, ra):
+        if sa in ap_list:
+            if ra not in cliente_usado:
+                client_dict = {'mac': ra, 'connected_to': sa, 'manufacturer': utils.manf2(ra.upper()[:8])}
+                ap_dict[sa]['clients'].append(client_dict)
+                cliente_usado.append(ra)
+
+        elif ra in ap_list:
+            if sa not in cliente_usado:
+                client_dict = {'mac': sa, 'connected_to': ra, 'manufacturer': utils.manf2(sa.upper()[:8])}
+                ap_dict[ra]['clients'].append(client_dict)
+                cliente_usado.append(sa)
 
 
 # Detect Deauthentication frames
 def deauth_packet(time, packet):
+
     ap = packet[Dot11].addr3
-    victim = packet[Dot11].addr1
     reason = packet[Dot11Deauth].reason
+
     if ap not in deauth_dict:
-        deauth_dict[ap] = {'first_seen': time, 'contador': 1, 'last_seen': time, 'victim': [], 'reason': [reason]}
+        deauth_dict[ap] = {'first_seen': time, 'contador': 1, 'last_seen': time, 'reason': [reason]}
     else:
         deauth_dict[ap]['contador'] += 1
         deauth_dict[ap]['last_seen'] = time
@@ -325,10 +325,11 @@ def sniffer(p):
 
             deauth_packet(time, p)
 
+        elif p.haslayer(Dot11Beacon):
 
+            beacon_packet(time, p)
 
         elif p.getlayer(Dot11).type in [1, 2]:
-
             datacontrol_packet(p)
 
 

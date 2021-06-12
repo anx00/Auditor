@@ -13,7 +13,9 @@ def noise_filter(addr1, addr2):
     ignore = ['ff:ff:ff:ff:ff:ff', '00:00:00:00:00:00', '33:33:00:', '33:33:ff:', '01:80:c2:', '01:00:5e:', '01:1b:19:',
               '01:0c:cd:', '01:00:0c:']
 
-    if addr1 is not None and addr2 is not None:
+    if addr1 is None or addr2 is None:
+        return True
+    else:
         for i in ignore:
             if i in addr1 or i in addr2:
                 return True
