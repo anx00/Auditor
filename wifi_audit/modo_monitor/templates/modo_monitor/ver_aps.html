@@ -96,7 +96,6 @@
                 <tbody class="redes-wifi__tabla__body" id="tabla_body">
                 {% for ap in aps %}
                     <tr class="redes-wifi__filas hover" id="ap-info" onclick="location.href='{{ ap.id }}/informacion'">
-                        <!-- Crear una vista para los datos -->
                         <td class="redes-wifi__filas__columnas cursor" style="width: 10%;">{{ ap.id }}</td>
                         <td class="redes-wifi__filas__columnas cursor" class="essid1" id="app"
                             style="width: 25%;">{{ ap.ssid }}</td>

@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CRONJOBS = [
-    ('* * * * *', 'source.cron.upload_db')
+    ('1 * * * *', 'source.cron.upload_db')
 ]
 
 DEVICE_ID = getmac.get_mac_address().replace(':', '')

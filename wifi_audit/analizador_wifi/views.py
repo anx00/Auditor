@@ -11,7 +11,6 @@ from django.conf import settings
 @login_required(login_url='login')
 def analizador_wifi(request):
     result = arp_scan(LOCAL_NETWORK)
-    # result = arp_scan("10.25.131.197/16")
 
     connected_ap = get_connected_bssid()
     device_id = settings.DEVICE_ID

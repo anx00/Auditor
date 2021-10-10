@@ -51,7 +51,7 @@ def modo_monitor(request):
             deauth_frames_first_seen = ""
             deauth_frames_last_seen = ""
 
-        if access_point.objects.filter(bssid=ap.upper()).exists() == False:
+        if access_point.objects.filter(bssid=bssid).exists() == False:
             access_point.objects.create(ssid=ssid, bssid=bssid, device_id=device_id, rssi=rssi, channel=channel, security_protocol=security_protocol,
                                         spectrum=spectrum, frecuency=frecuency, signal_quality=signal_quality,
                                         rates=rates, manufacturer=manufacturer, central_channel=central_channel,

@@ -5,6 +5,7 @@ import nmap3
 from scapy.all import *
 from scapy.layers.inet import TCP, IP
 from scapy.layers.l2 import Ether, ARP
+from modo_monitor import utils
 
 result = []
 nuevalista = []
@@ -46,13 +47,9 @@ def arp_scan(ip):
 
     time = str(datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 
-
     request = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=ip)
 
-    ans, unans = srp(request, timeout=1, verbose=0, retry=0)
-
-    # Mirar bien lo de como conseguir la MAC final del dispositivo, no puede ser dificil
-    # También detectar que el bridge está en la lista de APs yq eu puede detectar que el ridge es el primer dispositivo que encuentre con esa MAC
+    ans, unans = srp(request, timeout=1, verbose=0, retry=1)
 
     for sent, received in ans:
         device_name = s.getfqdn(received.psrc)
@@ -63,10 +60,11 @@ def arp_scan(ip):
         else:
             mac_list.append(received.hwsrc)
         result.append({'IP': received.psrc, 'MAC': received.hwsrc.upper(), 'name': device_name, 'last_seen': time,
-                       'vendor': manf2(received.hwsrc.upper()[:8])})
+                       'vendor': utils.manf2(received.hwsrc.upper()[:8])})
 
-        nuevalista.append(received.psrc)  # esto para guardar los dispositivos anteriores
+        nuevalista.append(received.psrc)
 
+    #guarda los dispositivos ordenados
     newlist = sorted(result, key=lambda k: int(k['IP'].split('.')[3]))
 
     return newlist
